@@ -1,6 +1,12 @@
 /** Luxon */
 import { DateTime, Settings } from "luxon";
 
+/** Helpers */
+import { createElement, wrapElement } from "../helpers/datePickerHelpers";
+
+/** Calendar */
+import createCalendar from "./calendar";
+
 /** Luxon Settings */
 Settings.defaultZone = "utc";
 Settings.defaultLocale = "pl";
@@ -15,67 +21,39 @@ class DatePicker {
     }
 
     initDatePicker() {
-        this.wrapElement(
+        wrapElement(
             this.inputElement,
             "div",
             "date-picker__wrapper js-date-picker-wrapper"
         );
 
-        this.createCalendar();
-    }
-
-    wrapElement(
-        domElement,
-        wrapperHtmlSelector = "div",
-        wrapperClass = "",
-        wrapperID = ""
-    ) {
-        const wrapper = this.createElement(
-            wrapperHtmlSelector,
-            wrapperClass,
-            wrapperID,
-            domElement.outerHTML
+        this.createCalendarWrapper();
+        createCalendar(
+            DateTime.now().toFormat("dd"),
+            DateTime.now().toFormat("MM"),
+            DateTime.now().toFormat("yyyy"),
+            "js-left-column-calendar"
         );
-
-        domElement.outerHTML = wrapper.outerHTML;
     }
 
-    createElement(
-        htmlSelector = "div",
-        className = "",
-        idName = "",
-        content = ""
-    ) {
-        const element = document.createElement(htmlSelector);
-
-        element.innerHTML = content;
-        element.className = className;
-        element.id = idName;
-
-        return element;
-    }
-
-    addEventListenerToElement(element, eventName, method) {
-        element.addEventListener(eventName, method);
-    }
-
-    createCalendar() {
-        const calendarBox = this.createElement(
+    createCalendarWrapper() {
+        const calendarBox = createElement(
             "div",
             "js-calendar-box date-picker__calendar-wrapper"
         );
         let input = document.querySelector(this.selector);
         const rootWrapper = input.parentElement;
 
-        rootWrapper.innerHTML += calendarBox.outerHTML;
-        input = document.querySelector(this.selector);
-        const calendarBoxDOM = document.querySelector(".js-calendar-box");
+        rootWrapper.appendChild(calendarBox);
 
-        this.addEventListenerToElement(input, "click", () => {
+        const calendarBoxDOM = document.querySelector(".js-calendar-box");
+        input = document.querySelector(this.selector);
+
+        input.addEventListener("click", () => {
             calendarBoxDOM.classList.add("-active");
         });
 
-        this.addEventListenerToElement(document, "click", (e) => {
+        document.addEventListener("click", (e) => {
             const isClickInside = rootWrapper.contains(e.target);
 
             if (isClickInside) return;
