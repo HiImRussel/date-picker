@@ -1,5 +1,7 @@
-import { initPortfolioSlider } from "./flexible-content/portfolio";
+import DatePicker from "./datePicker/datePicker";
 
-document.addEventListener("DOMContentLoaded", () => {
-    initPortfolioSlider();
-});
+const init = () => {
+    const datePicker = new DatePicker(".js-date-picker");
+};
+
+init();

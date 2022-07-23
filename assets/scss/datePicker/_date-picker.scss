@@ -1,0 +1,20 @@
+.date-picker {
+    &__wrapper {
+        position: relative;
+    }
+
+    &__calendar-wrapper {
+        position: absolute;
+        top: calc(100% + 8px);
+        background: #ffffff;
+        box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.1),
+            0px 8px 8px -4px rgba(16, 24, 40, 0.04);
+        border-radius: 8px;
+        display: none;
+        padding: 12px 16px;
+
+        &.-active {
+            display: flex;
+        }
+    }
+}

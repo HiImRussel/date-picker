@@ -1,21 +1,7 @@
 @import "variables/*";
-@import "pages/*";
-@import "blocks/*";
-@import "basic/*";
-@import "flexible-content/*";
+@import "datePicker/*";
 
 * {
     margin: 0;
-    font-family: "Raleway", sans-serif;
     color: white;
-}
-
-body {
-    background-color: $main-black;
-}
-
-main {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
 }
