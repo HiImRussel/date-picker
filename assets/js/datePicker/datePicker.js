@@ -1,5 +1,5 @@
 /** Luxon */
-import { DateTime, Settings } from "luxon";
+import { DateTime } from "luxon";
 
 /** Helpers */
 import { createElement, wrapElement } from "../helpers/datePickerHelpers";
@@ -7,49 +7,35 @@ import { createElement, wrapElement } from "../helpers/datePickerHelpers";
 /** Calendar */
 import createCalendar from "./calendar";
 
-/** Luxon Settings */
-Settings.defaultZone = "utc";
-Settings.defaultLocale = "pl";
+const datePicker = (selector, options) => {
+    const calendarsData = {
+        firstCalendar: {
+            day: DateTime.now().day,
+            month: DateTime.now().month,
+            year: DateTime.now().year,
+        },
+        secondCalendar: {
+            day: 1,
+            month: DateTime.now().plus({ months: 1 }).month,
+            year: DateTime.now().plus({ months: 1 }).year,
+        },
+    };
+    let inputElement = document.querySelector(selector);
+    let calendarBoxDOM;
+    let rootWrapper;
 
-class DatePicker {
-    constructor(selector, options = {}) {
-        this.inputElement = document.querySelector(selector);
-        this.selector = selector;
-        this.options = options;
-
-        this.initDatePicker();
-    }
-
-    initDatePicker() {
-        wrapElement(
-            this.inputElement,
-            "div",
-            "date-picker__wrapper js-date-picker-wrapper"
-        );
-
-        this.createCalendarWrapper();
-        createCalendar(
-            DateTime.now().toFormat("dd"),
-            DateTime.now().toFormat("MM"),
-            DateTime.now().toFormat("yyyy"),
-            "js-left-column-calendar"
-        );
-    }
-
-    createCalendarWrapper() {
+    const createCalendarWrapper = () => {
         const calendarBox = createElement(
             "div",
             "js-calendar-box date-picker__calendar-wrapper"
         );
-        let input = document.querySelector(this.selector);
-        const rootWrapper = input.parentElement;
 
         rootWrapper.appendChild(calendarBox);
 
-        const calendarBoxDOM = document.querySelector(".js-calendar-box");
-        input = document.querySelector(this.selector);
+        calendarBoxDOM = rootWrapper.querySelector(".js-calendar-box");
+        inputElement = document.querySelector(selector);
 
-        input.addEventListener("click", () => {
+        inputElement.addEventListener("click", () => {
             calendarBoxDOM.classList.add("-active");
         });
 
@@ -58,9 +44,63 @@ class DatePicker {
 
             if (isClickInside) return;
 
-            calendarBoxDOM.classList.remove("-active");
+            //calendarBoxDOM.classList.remove("-active");
         });
-    }
-}
+    };
 
-export default DatePicker;
+    const changeMonthHandler = (action, calendar) => {
+        const dataToChange = calendarsData[calendar];
+
+        if (action === "prev") {
+            if (dataToChange.month - 1 < 1) {
+                dataToChange.month = 12;
+                dataToChange.year = dataToChange.year - 1;
+            } else {
+                dataToChange.month = dataToChange.month - 1;
+            }
+        } else {
+            if (dataToChange.month + 1 > 12) {
+                dataToChange.month = 1;
+                dataToChange.year = dataToChange.year + 1;
+            } else {
+                dataToChange.month = dataToChange.month + 1;
+            }
+        }
+
+        createCalendar(
+            calendarsData[calendar].day,
+            calendarsData[calendar].month,
+            calendarsData[calendar].year,
+            rootWrapper,
+            changeMonthHandler,
+            "firstCalendar",
+            "js-left-column-calendar"
+        );
+    };
+
+    const initDatePicker = () => {
+        wrapElement(
+            inputElement,
+            "div",
+            "date-picker__wrapper js-date-picker-wrapper"
+        );
+
+        inputElement = document.querySelector(selector);
+        rootWrapper = inputElement.parentElement;
+
+        createCalendarWrapper();
+        createCalendar(
+            calendarsData.firstCalendar.day,
+            calendarsData.firstCalendar.month,
+            calendarsData.firstCalendar.year,
+            rootWrapper,
+            changeMonthHandler,
+            "firstCalendar",
+            "js-calendar--firstCalendar"
+        );
+    };
+
+    initDatePicker();
+};
+
+export default datePicker;

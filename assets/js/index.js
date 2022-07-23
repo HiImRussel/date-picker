@@ -1,7 +1,15 @@
-import DatePicker from "./datePicker/datePicker";
+/** Luxon */
+import { Settings } from "luxon";
+
+/** Date picker */
+import datePicker from "./datePicker/datePicker";
+
+/** Luxon Settings */
+Settings.defaultZone = "utc";
+Settings.defaultLocale = "pl";
 
 const init = () => {
-    const datePicker = new DatePicker(".js-date-picker");
+    const datePickerInstance = datePicker(".js-date-picker");
 };
 
 init();
