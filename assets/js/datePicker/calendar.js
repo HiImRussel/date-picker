@@ -19,11 +19,43 @@ const isTheSameDate = (date, dateToCompare) => {
     if (date.month !== dateToCompare.month || date.year !== dateToCompare.year)
         return false;
 
-    return date.day !== dateToCompare.day;
+    return date.day === dateToCompare.day;
 };
 
 const isDateSet = (date) => {
     return date.day !== undefined && date.day !== null;
+};
+
+const isDayAfter = (date, dateToCompare) => {
+    const diff = DateTime.fromObject({
+        day: date.monthDay,
+        month: date.month,
+        year: date.year,
+    }).diff(
+        DateTime.fromObject({
+            day: dateToCompare.day,
+            month: dateToCompare.month,
+            year: dateToCompare.year,
+        })
+    );
+
+    return diff.values.milliseconds > 0;
+};
+
+const isDayBefore = (date, dateToCompare) => {
+    const diff = DateTime.fromObject({
+        day: date.monthDay,
+        month: date.month,
+        year: date.year,
+    }).diff(
+        DateTime.fromObject({
+            day: dateToCompare.day,
+            month: dateToCompare.month,
+            year: dateToCompare.year,
+        })
+    );
+
+    return diff.values.milliseconds < 0;
 };
 
 const handleDayClick = (
@@ -61,13 +93,13 @@ const handleDayClick = (
             elementEndIndex
         );
 
-        const pseudoElementStart = createElement(
+        const pseudoElementEnd = createElement(
             "div",
             "date-picker__day js-date-picker-day  -pseudo-element -picked",
             "",
             date.monthDay
         );
-        const pseudoElemenEnd = createElement(
+        const pseudoElementStart = createElement(
             "div",
             "date-picker__day js-date-picker-day -pseudo-element -picked",
             "",
@@ -77,7 +109,7 @@ const handleDayClick = (
         allDays[elementStartIndex - 1].appendChild(pseudoElementStart);
         allDays[elementStartIndex - 1].classList.add("-start-day-picked");
 
-        allDays[elementEndIndex].appendChild(pseudoElemenEnd);
+        allDays[elementEndIndex].appendChild(pseudoElementEnd);
         allDays[elementEndIndex].classList.add("-end-day-picked");
 
         elementsBetween.forEach((elementBetween) => {
@@ -144,6 +176,9 @@ const createCalendar = (
     const currentCalendarBox = document.querySelector(
         `.js-calendar--${calendarProperty}`
     );
+    const pickedStartDate = getPickedStartDate();
+    const pickedEndDate = getPickedEndDate();
+
     // prevent from checking if is inside box (click outside auto close)
     if (currentCalendarBox !== null) {
         currentCalendarBox.style.display = "none";
@@ -216,6 +251,56 @@ const createCalendar = (
             "",
             monthDay
         );
+
+        const isStartSet = isDateSet(pickedStartDate);
+        const isEndSet = isDateSet(pickedEndDate);
+
+        if (isStartSet && isEndSet) {
+            const isAfter = isDayAfter(
+                { monthDay, month, year },
+                pickedStartDate
+            );
+            const isBefore = isDayBefore(
+                { monthDay, month, year },
+                pickedEndDate
+            );
+
+            if (isAfter && isBefore) {
+                renderDay.classList.add("-picked-between");
+            }
+
+            if (
+                isTheSameDate(
+                    { day: monthDay, month: month, year: year },
+                    pickedStartDate
+                )
+            ) {
+                const pseudoElementStart = createElement(
+                    "div",
+                    "date-picker__day js-date-picker-day -pseudo-element -picked",
+                    "",
+                    monthDay
+                );
+
+                renderDay.appendChild(pseudoElementStart);
+                renderDay.classList.add("-start-day-picked");
+            } else if (
+                isTheSameDate(
+                    { day: monthDay, month: month, year: year },
+                    pickedEndDate
+                )
+            ) {
+                const pseudoElementEnd = createElement(
+                    "div",
+                    "date-picker__day js-date-picker-day -pseudo-element -picked",
+                    "",
+                    monthDay
+                );
+
+                renderDay.appendChild(pseudoElementEnd);
+                renderDay.classList.add("-end-day-picked");
+            }
+        }
 
         renderDay.addEventListener("click", (e) =>
             handleDayClick(
