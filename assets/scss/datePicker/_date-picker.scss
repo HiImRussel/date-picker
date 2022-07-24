@@ -148,5 +148,29 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: $gray-700;
+    }
+
+    &__change-month-btn {
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__active-date {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+
+        &::first-letter {
+            text-transform: uppercase;
+        }
     }
 }
