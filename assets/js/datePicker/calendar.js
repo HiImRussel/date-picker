@@ -64,57 +64,56 @@ const handleDayClick = (
     getPickedStartDate,
     getPickedEndDate,
     setStartDate,
-    setEndDate
+    setEndDate,
+    reInitCalendars
 ) => {
-    const dayElement = e.target;
-    const allDays = document.querySelectorAll(".js-date-picker-day");
+    let pickedStartDate = getPickedStartDate();
+    let pickedEndDate = getPickedEndDate();
+    const isLikeStart = isTheSameDate(
+        { day: date.monthDay, month: date.month, year: date.year },
+        pickedStartDate
+    );
+    const isLikeEnd = isTheSameDate(
+        { day: date.monthDay, month: date.month, year: date.year },
+        pickedEndDate
+    );
 
-    if (!isDateSet(getPickedStartDate())) {
+    if (isLikeStart || isLikeEnd) {
         setStartDate({
             day: date.monthDay,
             month: date.month,
             year: date.year,
         });
+        setEndDate({ day: null, month: null, year: null });
 
-        dayElement.classList.add("-start-day");
-    } else if (!isDateSet(getPickedEndDate())) {
-        const startElement = document.querySelector(
-            ".js-date-picker-day.-start-day"
-        );
-        const elementStartIndex =
-            Array.prototype.slice.call(allDays).indexOf(startElement) + 1;
+        reInitCalendars();
 
-        const elementEndIndex = Array.prototype.slice
-            .call(allDays)
-            .indexOf(dayElement);
+        return;
+    }
 
-        const elementsBetween = Array.from(allDays).slice(
-            elementStartIndex,
-            elementEndIndex
-        );
-
-        const pseudoElementEnd = createElement(
-            "div",
-            "date-picker__day js-date-picker-day  -pseudo-element -picked",
-            "",
-            date.monthDay
-        );
-        const pseudoElementStart = createElement(
-            "div",
-            "date-picker__day js-date-picker-day -pseudo-element -picked",
-            "",
-            getPickedStartDate().day
-        );
-
-        allDays[elementStartIndex - 1].appendChild(pseudoElementStart);
-        allDays[elementStartIndex - 1].classList.add("-start-day-picked");
-
-        allDays[elementEndIndex].appendChild(pseudoElementEnd);
-        allDays[elementEndIndex].classList.add("-end-day-picked");
-
-        elementsBetween.forEach((elementBetween) => {
-            elementBetween.classList.add("-picked-between");
+    if (!isDateSet(pickedStartDate)) {
+        setStartDate({
+            day: date.monthDay,
+            month: date.month,
+            year: date.year,
         });
+    } else if (!isDateSet(pickedEndDate)) {
+        const isBeforeStart = isDayBefore(
+            { monthDay: date.monthDay, month: date.month, year: date.year },
+            pickedStartDate
+        );
+
+        if (isBeforeStart) {
+            setStartDate({
+                day: date.monthDay,
+                month: date.month,
+                year: date.year,
+            });
+            setEndDate(pickedStartDate);
+            reInitCalendars();
+
+            return;
+        }
 
         setEndDate({
             day: date.monthDay,
@@ -128,27 +127,9 @@ const handleDayClick = (
             year: date.year,
         });
         setEndDate({ day: null, month: null, year: null });
-
-        const pickedPseudoElements = document.querySelectorAll(
-            ".js-date-picker-day.-pseudo-element"
-        );
-
-        pickedPseudoElements.forEach((pseudoElement) => {
-            pseudoElement.remove();
-        });
-
-        allDays.forEach((domDay) => {
-            domDay.classList.remove("-picked");
-            domDay.classList.remove("-start-day-picked");
-            domDay.classList.remove("-end-day-picked");
-            domDay.classList.remove("-picked-between");
-            domDay.classList.remove("-start-day");
-        });
-
-        dayElement.classList.add("-start-day");
     }
 
-    dayElement.classList.add("-picked");
+    reInitCalendars();
 };
 
 const createCalendar = (
@@ -162,7 +143,8 @@ const createCalendar = (
     getPickedStartDate,
     getPickedEndDate,
     setStartDate,
-    setEndDate
+    setEndDate,
+    reInitCalendars
 ) => {
     const newDate = DateTime.fromObject({ day, month, year });
     const prevDate = changeDate("prev", { day, month, year });
@@ -300,6 +282,15 @@ const createCalendar = (
                 renderDay.appendChild(pseudoElementEnd);
                 renderDay.classList.add("-end-day-picked");
             }
+        } else if (
+            isStartSet &&
+            isTheSameDate(
+                { day: monthDay, month: month, year: year },
+                pickedStartDate
+            )
+        ) {
+            renderDay.classList.add("-picked");
+            renderDay.classList.add("-start-day");
         }
 
         renderDay.addEventListener("click", (e) =>
@@ -309,7 +300,8 @@ const createCalendar = (
                 getPickedStartDate,
                 getPickedEndDate,
                 setStartDate,
-                setEndDate
+                setEndDate,
+                reInitCalendars
             )
         );
 

@@ -66,6 +66,8 @@ const datePicker = (selector, options) => {
         });
 
         document.addEventListener("click", (e) => {
+            const rootWrapper = document.querySelector(selector).parentElement;
+
             const isClickInside = rootWrapper.contains(e.target);
 
             if (isClickInside) return;
@@ -104,7 +106,42 @@ const datePicker = (selector, options) => {
             getPickedStartDate,
             getPickedEndDate,
             setStartDate,
-            setEndDate
+            setEndDate,
+            reInitCalendars
+        );
+    };
+
+    const reInitCalendars = () => {
+        inputElement = document.querySelector(selector);
+        rootWrapper = inputElement.parentElement;
+
+        createCalendar(
+            calendarsData.secondCalendar.day,
+            calendarsData.secondCalendar.month,
+            calendarsData.secondCalendar.year,
+            rootWrapper,
+            changeMonthHandler,
+            "secondCalendar",
+            "js-calendar--secondCalendar",
+            getPickedStartDate,
+            getPickedEndDate,
+            setStartDate,
+            setEndDate,
+            reInitCalendars
+        );
+        createCalendar(
+            calendarsData.firstCalendar.day,
+            calendarsData.firstCalendar.month,
+            calendarsData.firstCalendar.year,
+            rootWrapper,
+            changeMonthHandler,
+            "firstCalendar",
+            "js-calendar--firstCalendar",
+            getPickedStartDate,
+            getPickedEndDate,
+            setStartDate,
+            setEndDate,
+            reInitCalendars
         );
     };
 
@@ -130,7 +167,8 @@ const datePicker = (selector, options) => {
             getPickedStartDate,
             getPickedEndDate,
             setStartDate,
-            setEndDate
+            setEndDate,
+            reInitCalendars
         );
         createCalendar(
             calendarsData.secondCalendar.day,
@@ -143,7 +181,8 @@ const datePicker = (selector, options) => {
             getPickedStartDate,
             getPickedEndDate,
             setStartDate,
-            setEndDate
+            setEndDate,
+            reInitCalendars
         );
     };
 
