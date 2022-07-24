@@ -46,6 +46,7 @@
         line-height: 20px;
         color: $gray-700;
         border-radius: 20px;
+        position: relative;
 
         &:hover {
             color: $primary-700;
@@ -62,11 +63,6 @@
             }
         }
 
-        &.-current {
-            background: $gray-100;
-            font-weight: 500;
-        }
-
         &.-picked {
             background: $primary-600;
             color: #ffffff;
@@ -74,7 +70,43 @@
 
         &.-picked-between {
             color: $gray-500;
-            background: transparent;
+            background: $primary-50;
+            border-radius: 0;
+        }
+
+        &.-start-day-picked {
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 50%;
+                height: 100%;
+                background: $primary-50;
+            }
+        }
+
+        &.-end-day-picked {
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 50%;
+                height: 100%;
+                background: $primary-50;
+            }
+        }
+
+        &.-current {
+            background: $gray-100;
+            font-weight: 500;
+        }
+
+        &.-pseudo-element {
+            position: absolute;
+            left: 0;
+            top: 0;
         }
     }
 

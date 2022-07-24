@@ -43,7 +43,47 @@ const handleDayClick = (
             month: date.month,
             year: date.year,
         });
+
+        dayElement.classList.add("-start-day");
     } else if (!isDateSet(getPickedEndDate())) {
+        const startElement = document.querySelector(
+            ".js-date-picker-day.-start-day"
+        );
+        const elementStartIndex =
+            Array.prototype.slice.call(allDays).indexOf(startElement) + 1;
+
+        const elementEndIndex = Array.prototype.slice
+            .call(allDays)
+            .indexOf(dayElement);
+
+        const elementsBetween = Array.from(allDays).slice(
+            elementStartIndex,
+            elementEndIndex
+        );
+
+        const pseudoElementStart = createElement(
+            "div",
+            "date-picker__day js-date-picker-day  -pseudo-element -picked",
+            "",
+            date.monthDay
+        );
+        const pseudoElemenEnd = createElement(
+            "div",
+            "date-picker__day js-date-picker-day -pseudo-element -picked",
+            "",
+            getPickedStartDate().day
+        );
+
+        allDays[elementStartIndex - 1].appendChild(pseudoElementStart);
+        allDays[elementStartIndex - 1].classList.add("-start-day-picked");
+
+        allDays[elementEndIndex].appendChild(pseudoElemenEnd);
+        allDays[elementEndIndex].classList.add("-end-day-picked");
+
+        elementsBetween.forEach((elementBetween) => {
+            elementBetween.classList.add("-picked-between");
+        });
+
         setEndDate({
             day: date.monthDay,
             month: date.month,
@@ -57,9 +97,23 @@ const handleDayClick = (
         });
         setEndDate({ day: null, month: null, year: null });
 
+        const pickedPseudoElements = document.querySelectorAll(
+            ".js-date-picker-day.-pseudo-element"
+        );
+
+        pickedPseudoElements.forEach((pseudoElement) => {
+            pseudoElement.remove();
+        });
+
         allDays.forEach((domDay) => {
             domDay.classList.remove("-picked");
+            domDay.classList.remove("-start-day-picked");
+            domDay.classList.remove("-end-day-picked");
+            domDay.classList.remove("-picked-between");
+            domDay.classList.remove("-start-day");
         });
+
+        dayElement.classList.add("-start-day");
     }
 
     dayElement.classList.add("-picked");

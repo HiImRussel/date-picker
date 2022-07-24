@@ -40,7 +40,8 @@
   font-size: 14px;
   line-height: 20px;
   color: #344054;
-  border-radius: 20px; }
+  border-radius: 20px;
+  position: relative; }
   .date-picker__day:hover {
     color: #0091eb;
     background: #e5f6ff; }
@@ -50,15 +51,36 @@
     .date-picker__day.-prev:hover {
       color: #667085;
       background: transparent; }
-  .date-picker__day.-current {
-    background: #f2f4f7;
-    font-weight: 500; }
   .date-picker__day.-picked {
     background: #00a7ff;
     color: #ffffff; }
   .date-picker__day.-picked-between {
     color: #667085;
-    background: transparent; }
+    background: #e5f6ff;
+    border-radius: 0; }
+  .date-picker__day.-start-day-picked::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: #e5f6ff; }
+  .date-picker__day.-end-day-picked::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: #e5f6ff; }
+  .date-picker__day.-current {
+    background: #f2f4f7;
+    font-weight: 500; }
+  .date-picker__day.-pseudo-element {
+    position: absolute;
+    left: 0;
+    top: 0; }
 
 .date-picker__date {
   width: 100%;
