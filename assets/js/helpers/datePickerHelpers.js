@@ -54,3 +54,12 @@ export const changeDate = (action, date) => {
 
     return date;
 };
+
+export const createInput = (type, readonly = false, className) => {
+    const input = createElement("input", className);
+
+    input.type = type;
+    input.readOnly = readonly;
+
+    return input;
+};

@@ -154,7 +154,9 @@ const createCalendar = (
         year: prevDate.year,
     });
 
-    const calendarBoxDOM = rootContainer.querySelector(".js-calendar-box");
+    const calendarBoxDOM = rootContainer.querySelector(
+        ".js-date-pickers-wrapper"
+    );
     const currentCalendarBox = document.querySelector(
         `.js-calendar--${calendarProperty}`
     );

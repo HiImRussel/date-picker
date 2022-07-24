@@ -6,6 +6,10 @@ import { createElement, wrapElement } from "../helpers/datePickerHelpers";
 
 /** Calendar */
 import createCalendar from "./calendar";
+import initBottom from "./datePickerBottom";
+
+/** Pick interval */
+import initPickInterval from "./pickInterval";
 
 const datePicker = (selector, options) => {
     const calendarsData = {
@@ -74,6 +78,28 @@ const datePicker = (selector, options) => {
 
             calendarBoxDOM.classList.remove("-active");
         });
+    };
+
+    const createRightColumn = () => {
+        const calendarRightColumn = createElement(
+            "div",
+            "js-date-right-column date-picker__right-column"
+        );
+
+        rootWrapper
+            .querySelector(".js-calendar-box")
+            .appendChild(calendarRightColumn);
+    };
+
+    const createDatesPickerWrapper = () => {
+        const calendarBox = createElement(
+            "div",
+            "js-date-pickers-wrapper date-picker__date-pickers-wrapper"
+        );
+
+        rootWrapper
+            .querySelector(".js-date-right-column")
+            .appendChild(calendarBox);
     };
 
     const changeMonthHandler = (action, calendar) => {
@@ -156,6 +182,15 @@ const datePicker = (selector, options) => {
         rootWrapper = inputElement.parentElement;
 
         createCalendarWrapper();
+
+        initPickInterval(rootWrapper.querySelector(".js-calendar-box"));
+
+        createRightColumn();
+
+        createDatesPickerWrapper();
+
+        initBottom(rootWrapper.querySelector(".js-date-right-column"));
+
         createCalendar(
             calendarsData.firstCalendar.day,
             calendarsData.firstCalendar.month,
