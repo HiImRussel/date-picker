@@ -22,6 +22,8 @@
   display: flex;
   flex-direction: column;
   align-items: center; }
+  .date-picker__calendar:nth-last-of-type(1) {
+    border-left: 0; }
 
 .date-picker__days-wrapper {
   width: 280px;
@@ -51,12 +53,15 @@
     .date-picker__day.-prev:hover {
       color: #667085;
       background: transparent; }
+  .date-picker__day.-current {
+    background: #f2f4f7;
+    font-weight: 500; }
   .date-picker__day.-picked {
     background: #00a7ff;
     color: #ffffff; }
   .date-picker__day.-picked-between {
-    color: #667085;
-    background: #e5f6ff;
+    color: #667085 !important;
+    background: #e5f6ff !important;
     border-radius: 0; }
   .date-picker__day.-start-day-picked::before {
     content: "";
@@ -74,13 +79,22 @@
     width: 50%;
     height: 100%;
     background: #e5f6ff; }
-  .date-picker__day.-current {
-    background: #f2f4f7;
-    font-weight: 500; }
   .date-picker__day.-pseudo-element {
     position: absolute;
     left: 0;
     top: 0; }
+  .date-picker__day:nth-of-type(7n) {
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important; }
+    .date-picker__day:nth-of-type(7n)::before {
+      border-top-right-radius: 20px !important;
+      border-bottom-right-radius: 20px !important; }
+  .date-picker__day:nth-of-type(7n + 1) {
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important; }
+    .date-picker__day:nth-of-type(7n + 1)::before {
+      border-top-left-radius: 20px !important;
+      border-bottom-left-radius: 20px !important; }
 
 .date-picker__date {
   width: 100%;
@@ -96,6 +110,32 @@
   align-items: center;
   justify-content: center; }
 
+@font-face {
+  font-family: "Roboto";
+  src: url(2745c061dfc318ec57da.ttf);
+  font-weight: 100; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url(ce61b8b68994802f2e55.ttf);
+  font-weight: 300; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url(6bede58e856278b0f8f1.ttf);
+  font-weight: 400; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url(0fcd45fbfc419c42c8b9.ttf);
+  font-weight: 500; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url(17451a4c1cd55e33ac57.ttf);
+  font-weight: 700; }
+
 * {
-  margin: 0; }
+  margin: 0;
+  font-family: "Roboto"; }
 

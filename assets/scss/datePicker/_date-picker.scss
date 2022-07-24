@@ -25,6 +25,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        &:nth-last-of-type(1) {
+            border-left: 0;
+        }
     }
 
     &__days-wrapper {
@@ -63,14 +67,19 @@
             }
         }
 
+        &.-current {
+            background: $gray-100;
+            font-weight: 500;
+        }
+
         &.-picked {
             background: $primary-600;
             color: #ffffff;
         }
 
         &.-picked-between {
-            color: $gray-500;
-            background: $primary-50;
+            color: $gray-500 !important;
+            background: $primary-50 !important;
             border-radius: 0;
         }
 
@@ -98,15 +107,30 @@
             }
         }
 
-        &.-current {
-            background: $gray-100;
-            font-weight: 500;
-        }
-
         &.-pseudo-element {
             position: absolute;
             left: 0;
             top: 0;
+        }
+
+        &:nth-of-type(7n) {
+            border-top-right-radius: 20px !important;
+            border-bottom-right-radius: 20px !important;
+
+            &::before {
+                border-top-right-radius: 20px !important;
+                border-bottom-right-radius: 20px !important;
+            }
+        }
+
+        &:nth-of-type(7n + 1) {
+            border-top-left-radius: 20px !important;
+            border-bottom-left-radius: 20px !important;
+
+            &::before {
+                border-top-left-radius: 20px !important;
+                border-bottom-left-radius: 20px !important;
+            }
         }
     }
 
