@@ -44,7 +44,7 @@ const datePicker = (selector, options) => {
 
             if (isClickInside) return;
 
-            //calendarBoxDOM.classList.remove("-active");
+            calendarBoxDOM.classList.remove("-active");
         });
     };
 
@@ -73,8 +73,8 @@ const datePicker = (selector, options) => {
             calendarsData[calendar].year,
             rootWrapper,
             changeMonthHandler,
-            "firstCalendar",
-            "js-left-column-calendar"
+            calendar,
+            `js-calendar--${calendar}`
         );
     };
 
@@ -97,6 +97,15 @@ const datePicker = (selector, options) => {
             changeMonthHandler,
             "firstCalendar",
             "js-calendar--firstCalendar"
+        );
+        createCalendar(
+            calendarsData.secondCalendar.day,
+            calendarsData.secondCalendar.month,
+            calendarsData.secondCalendar.year,
+            rootWrapper,
+            changeMonthHandler,
+            "secondCalendar",
+            "js-calendar--secondCalendar"
         );
     };
 

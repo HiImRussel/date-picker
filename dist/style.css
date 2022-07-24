@@ -15,6 +15,49 @@
   .date-picker__calendar-wrapper.-active {
     display: flex; }
 
+.date-picker__calendar {
+  border: 1px solid #e4e7ec;
+  border-top: 0;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.date-picker__days-wrapper {
+  width: 280px;
+  display: flex;
+  flex-wrap: wrap; }
+
+.date-picker__day {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #344054; }
+  .date-picker__day.-prev {
+    color: #667085;
+    cursor: initial; }
+
+.date-picker__date {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px; }
+
+.date-picker__day-name {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
 * {
   margin: 0; }
 

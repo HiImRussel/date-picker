@@ -34,3 +34,23 @@ export const wrapElement = (
 
     domElement.outerHTML = wrapper.outerHTML;
 };
+
+export const changeDate = (action, date) => {
+    if (action === "prev") {
+        if (date.month - 1 < 1) {
+            date.month = 12;
+            date.year = date.year - 1;
+        } else {
+            date.month = date.month - 1;
+        }
+    } else {
+        if (date.month + 1 > 12) {
+            date.month = 1;
+            date.year = date.year + 1;
+        } else {
+            date.month = date.month + 1;
+        }
+    }
+
+    return date;
+};
