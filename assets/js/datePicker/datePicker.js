@@ -20,9 +20,35 @@ const datePicker = (selector, options) => {
             year: DateTime.now().plus({ months: 1 }).year,
         },
     };
+    let pickedStartDate = {
+        day: null,
+        month: null,
+        year: null,
+    };
+    let pickedEndDate = {
+        day: null,
+        month: null,
+        year: null,
+    };
     let inputElement = document.querySelector(selector);
     let calendarBoxDOM;
     let rootWrapper;
+
+    const getPickedStartDate = () => {
+        return pickedStartDate;
+    };
+
+    const getPickedEndDate = () => {
+        return pickedEndDate;
+    };
+
+    const setStartDate = (date) => {
+        pickedStartDate = date;
+    };
+
+    const setEndDate = (date) => {
+        pickedEndDate = date;
+    };
 
     const createCalendarWrapper = () => {
         const calendarBox = createElement(
@@ -74,7 +100,11 @@ const datePicker = (selector, options) => {
             rootWrapper,
             changeMonthHandler,
             calendar,
-            `js-calendar--${calendar}`
+            `js-calendar--${calendar}`,
+            getPickedStartDate,
+            getPickedEndDate,
+            setStartDate,
+            setEndDate
         );
     };
 
@@ -96,7 +126,11 @@ const datePicker = (selector, options) => {
             rootWrapper,
             changeMonthHandler,
             "firstCalendar",
-            "js-calendar--firstCalendar"
+            "js-calendar--firstCalendar",
+            getPickedStartDate,
+            getPickedEndDate,
+            setStartDate,
+            setEndDate
         );
         createCalendar(
             calendarsData.secondCalendar.day,
@@ -105,7 +139,11 @@ const datePicker = (selector, options) => {
             rootWrapper,
             changeMonthHandler,
             "secondCalendar",
-            "js-calendar--secondCalendar"
+            "js-calendar--secondCalendar",
+            getPickedStartDate,
+            getPickedEndDate,
+            setStartDate,
+            setEndDate
         );
     };
 

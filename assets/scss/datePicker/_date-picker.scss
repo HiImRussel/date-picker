@@ -45,10 +45,36 @@
         font-size: 14px;
         line-height: 20px;
         color: $gray-700;
+        border-radius: 20px;
+
+        &:hover {
+            color: $primary-700;
+            background: $primary-50;
+        }
 
         &.-prev {
             color: $gray-500;
             cursor: initial;
+
+            &:hover {
+                color: $gray-500;
+                background: transparent;
+            }
+        }
+
+        &.-current {
+            background: $gray-100;
+            font-weight: 500;
+        }
+
+        &.-picked {
+            background: $primary-600;
+            color: #ffffff;
+        }
+
+        &.-picked-between {
+            color: $gray-500;
+            background: transparent;
         }
     }
 

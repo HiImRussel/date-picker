@@ -39,10 +39,26 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  color: #344054; }
+  color: #344054;
+  border-radius: 20px; }
+  .date-picker__day:hover {
+    color: #0091eb;
+    background: #e5f6ff; }
   .date-picker__day.-prev {
     color: #667085;
     cursor: initial; }
+    .date-picker__day.-prev:hover {
+      color: #667085;
+      background: transparent; }
+  .date-picker__day.-current {
+    background: #f2f4f7;
+    font-weight: 500; }
+  .date-picker__day.-picked {
+    background: #00a7ff;
+    color: #ffffff; }
+  .date-picker__day.-picked-between {
+    color: #667085;
+    background: transparent; }
 
 .date-picker__date {
   width: 100%;
