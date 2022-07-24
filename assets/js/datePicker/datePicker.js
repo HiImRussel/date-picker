@@ -169,6 +169,13 @@ const datePicker = (selector, options) => {
             setEndDate,
             reInitCalendars
         );
+
+        initBottom(
+            rootWrapper.querySelector(".js-date-right-column"),
+            pickedStartDate,
+            pickedEndDate,
+            rootWrapper
+        );
     };
 
     const initDatePicker = () => {
@@ -189,7 +196,12 @@ const datePicker = (selector, options) => {
 
         createDatesPickerWrapper();
 
-        initBottom(rootWrapper.querySelector(".js-date-right-column"));
+        initBottom(
+            rootWrapper.querySelector(".js-date-right-column"),
+            "",
+            "",
+            rootWrapper
+        );
 
         createCalendar(
             calendarsData.firstCalendar.day,
