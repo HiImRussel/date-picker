@@ -2,14 +2,16 @@
 import { DateTime } from "luxon";
 
 /** Helpers */
-import { createElement, wrapElement } from "../helpers/datePickerHelpers";
+import {
+    createElement,
+    createInput,
+    wrapElement,
+} from "./helpers/datePickerHelpers";
 
-/** Calendar */
-import createCalendar from "./calendar";
-import initBottom from "./datePickerBottom";
-
-/** Pick interval */
-import initPickInterval from "./pickInterval";
+/** Components */
+import createCalendar from "./components/calendar";
+import initBottom from "./components/datePickerBottom";
+import initPickInterval from "./components/pickInterval";
 
 const datePicker = (selector, options) => {
     const calendarsData = {
@@ -24,6 +26,15 @@ const datePicker = (selector, options) => {
             year: DateTime.now().plus({ months: 1 }).year,
         },
     };
+    const defaultOptions = {
+        rangePicking: true,
+        hiddenInput: false,
+        hiddenInputOutputFormat: "dd.MMMM.yyyy",
+        inputOutputFormat: "dd.MMMM.yyyy",
+        inputsInsideCalendarOutputFormat: "dd.MMMM.yyyy",
+        mode: "complex",
+        breakpoint: 768,
+    };
     let pickedStartDate = {
         day: null,
         month: null,
@@ -37,13 +48,18 @@ const datePicker = (selector, options) => {
     let inputElement = document.querySelector(selector);
     let calendarBoxDOM;
     let rootWrapper;
+    let datesPickerWrapper;
 
-    const getPickedStartDate = () => {
-        return pickedStartDate;
-    };
+    const mapOptions = () => {
+        for (const [key, value] of Object.entries(options)) {
+            if (
+                defaultOptions[key] === undefined ||
+                defaultOptions[key] === null
+            )
+                return;
 
-    const getPickedEndDate = () => {
-        return pickedEndDate;
+            defaultOptions[key] = value;
+        }
     };
 
     const setStartDate = (date) => {
@@ -65,9 +81,9 @@ const datePicker = (selector, options) => {
         calendarBoxDOM = rootWrapper.querySelector(".js-calendar-box");
         inputElement = document.querySelector(selector);
 
-        inputElement.addEventListener("click", () => {
-            calendarBoxDOM.classList.add("-active");
-        });
+        inputElement.addEventListener("click", () =>
+            calendarBoxDOM.classList.add("-active")
+        );
 
         document.addEventListener("click", (e) => {
             const rootWrapper = document.querySelector(selector).parentElement;
@@ -97,13 +113,47 @@ const datePicker = (selector, options) => {
             "js-date-pickers-wrapper date-picker__date-pickers-wrapper"
         );
 
+        datesPickerWrapper = calendarBox;
+
         rootWrapper
             .querySelector(".js-date-right-column")
             .appendChild(calendarBox);
     };
 
-    const changeMonthHandler = (action, calendar) => {
-        const dataToChange = calendarsData[calendar];
+    const getCalendarsData = () => {
+        return {
+            calendarsData,
+            pickedStartDate,
+            pickedEndDate,
+            inputElement,
+            rootWrapper,
+            calendarBoxDOM,
+            defaultOptions,
+            changeMonthHandler,
+            setStartDate,
+            setEndDate,
+            reInitCalendars,
+            datesPickerWrapper,
+        };
+    };
+
+    const reInitCalendars = () => {
+        inputElement = document.querySelector(selector);
+        rootWrapper = inputElement.parentElement;
+
+        createCalendar(getCalendarsData, "firstCalendar");
+        createCalendar(getCalendarsData, "secondCalendar");
+
+        initBottom(
+            rootWrapper.querySelector(".js-date-right-column"),
+            pickedStartDate,
+            pickedEndDate,
+            rootWrapper
+        );
+    };
+
+    const changeMonthHandler = (action, calendarAccessor) => {
+        const dataToChange = calendarsData[calendarAccessor];
 
         if (action === "prev") {
             if (dataToChange.month - 1 < 1) {
@@ -121,64 +171,12 @@ const datePicker = (selector, options) => {
             }
         }
 
-        createCalendar(
-            calendarsData[calendar].day,
-            calendarsData[calendar].month,
-            calendarsData[calendar].year,
-            rootWrapper,
-            changeMonthHandler,
-            calendar,
-            `js-calendar--${calendar}`,
-            getPickedStartDate,
-            getPickedEndDate,
-            setStartDate,
-            setEndDate,
-            reInitCalendars
-        );
-    };
-
-    const reInitCalendars = () => {
-        inputElement = document.querySelector(selector);
-        rootWrapper = inputElement.parentElement;
-
-        createCalendar(
-            calendarsData.secondCalendar.day,
-            calendarsData.secondCalendar.month,
-            calendarsData.secondCalendar.year,
-            rootWrapper,
-            changeMonthHandler,
-            "secondCalendar",
-            "js-calendar--secondCalendar",
-            getPickedStartDate,
-            getPickedEndDate,
-            setStartDate,
-            setEndDate,
-            reInitCalendars
-        );
-        createCalendar(
-            calendarsData.firstCalendar.day,
-            calendarsData.firstCalendar.month,
-            calendarsData.firstCalendar.year,
-            rootWrapper,
-            changeMonthHandler,
-            "firstCalendar",
-            "js-calendar--firstCalendar",
-            getPickedStartDate,
-            getPickedEndDate,
-            setStartDate,
-            setEndDate,
-            reInitCalendars
-        );
-
-        initBottom(
-            rootWrapper.querySelector(".js-date-right-column"),
-            pickedStartDate,
-            pickedEndDate,
-            rootWrapper
-        );
+        reInitCalendars();
     };
 
     const initDatePicker = () => {
+        mapOptions();
+
         wrapElement(
             inputElement,
             "div",
@@ -187,6 +185,17 @@ const datePicker = (selector, options) => {
 
         inputElement = document.querySelector(selector);
         rootWrapper = inputElement.parentElement;
+
+        if (defaultOptions.hiddenInput) {
+            const hiddenInput = createInput(
+                "text",
+                true,
+                "date-picker__hidden-input",
+                ""
+            );
+
+            rootWrapper.appendChild(hiddenInput);
+        }
 
         createCalendarWrapper();
 
@@ -203,34 +212,8 @@ const datePicker = (selector, options) => {
             rootWrapper
         );
 
-        createCalendar(
-            calendarsData.firstCalendar.day,
-            calendarsData.firstCalendar.month,
-            calendarsData.firstCalendar.year,
-            rootWrapper,
-            changeMonthHandler,
-            "firstCalendar",
-            "js-calendar--firstCalendar",
-            getPickedStartDate,
-            getPickedEndDate,
-            setStartDate,
-            setEndDate,
-            reInitCalendars
-        );
-        createCalendar(
-            calendarsData.secondCalendar.day,
-            calendarsData.secondCalendar.month,
-            calendarsData.secondCalendar.year,
-            rootWrapper,
-            changeMonthHandler,
-            "secondCalendar",
-            "js-calendar--secondCalendar",
-            getPickedStartDate,
-            getPickedEndDate,
-            setStartDate,
-            setEndDate,
-            reInitCalendars
-        );
+        createCalendar(getCalendarsData, "firstCalendar");
+        createCalendar(getCalendarsData, "secondCalendar");
     };
 
     initDatePicker();

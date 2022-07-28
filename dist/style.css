@@ -216,6 +216,9 @@
     color: white;
     margin-left: 12px; }
 
+.date-picker__hidden-input {
+  display: none; }
+
 @font-face {
   font-family: "Roboto";
   src: url(2745c061dfc318ec57da.ttf);

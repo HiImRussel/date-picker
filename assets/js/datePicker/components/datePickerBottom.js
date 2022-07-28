@@ -2,7 +2,11 @@
 import { DateTime } from "luxon";
 
 /** Helpers */
-import { createElement, createInput } from "../helpers/datePickerHelpers";
+import {
+    createElement,
+    createInput,
+    isDateSet,
+} from "../helpers/datePickerHelpers";
 
 const initBottom = (
     container,
@@ -10,32 +14,35 @@ const initBottom = (
     pickedEndDate = "",
     rootWrapper
 ) => {
-    const domBottomWrapper = document.querySelector(
+    const domBottomWrapper = rootWrapper.querySelector(
         ".js-date-picker-bottom-wrapper"
     );
-
     const datePickerBox = rootWrapper.querySelector(".js-calendar-box");
+    const isSetStartDate = isDateSet(pickedStartDate);
+    const isSetEndDate = isDateSet(pickedEndDate);
 
     if (domBottomWrapper !== null && domBottomWrapper !== undefined) {
         domBottomWrapper.remove();
     }
 
-    if (pickedStartDate.length !== 0 && pickedEndDate.length !== 0) {
+    if (isSetStartDate) {
         pickedStartDate = DateTime.fromObject({
             day: pickedStartDate.day,
             month: pickedStartDate.month,
             year: pickedStartDate.year,
-        }).toFormat("dd.MMMM.yyyy");
+        }).toFormat("dd.MM.yyyy");
+    } else {
+        pickedStartDate = "";
+    }
 
-        if (pickedEndDate.day !== null) {
-            pickedEndDate = DateTime.fromObject({
-                day: pickedEndDate.day,
-                month: pickedEndDate.month,
-                year: pickedEndDate.year,
-            }).toFormat("dd.MMMM.yyyy");
-        } else {
-            pickedEndDate = "";
-        }
+    if (isSetEndDate) {
+        pickedEndDate = DateTime.fromObject({
+            day: pickedEndDate.day,
+            month: pickedEndDate.month,
+            year: pickedEndDate.year,
+        }).toFormat("dd.MM.yyyy");
+    } else {
+        pickedEndDate = "";
     }
 
     const bottomWrapper = createElement(
@@ -76,9 +83,9 @@ const initBottom = (
         "Zastosuj"
     );
 
-    cancelButton.addEventListener("click", () => {
-        datePickerBox.classList.remove("-active");
-    });
+    cancelButton.addEventListener("click", () =>
+        datePickerBox.classList.remove("-active")
+    );
 
     buttonsWrapper.appendChild(cancelButton);
     buttonsWrapper.appendChild(applyButton);
