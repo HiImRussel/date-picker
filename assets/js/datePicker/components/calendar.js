@@ -7,6 +7,7 @@ import { DateTime } from "luxon";
 /** Componnets */
 import { initCalendarTop } from "./calendarTop";
 import { initCalendarDays } from "./calendarDays";
+import { initBasicModeIntervals } from "./basicModeIntervals";
 
 const createCalendar = (getCalendarsData, calendarAccessor) => {
     const { calendarsData, datesPickerWrapper } = getCalendarsData();
@@ -44,6 +45,10 @@ const createCalendar = (getCalendarsData, calendarAccessor) => {
 
     const daysContainer = createElement("div", "date-picker__days-wrapper");
     const datePicker = createElement("div", "date-picker__date");
+    const basicModeIntervalsBox = createElement(
+        "div",
+        "date-picker__basic-mode-intervals"
+    );
 
     initCalendarTop(
         datePicker,
@@ -52,6 +57,8 @@ const createCalendar = (getCalendarsData, calendarAccessor) => {
         calendarDate,
         calendarAccessor
     );
+
+    initBasicModeIntervals(basicModeIntervalsBox, getCalendarsData);
 
     initCalendarDays(
         calendarDate,
@@ -67,6 +74,7 @@ const createCalendar = (getCalendarsData, calendarAccessor) => {
     );
 
     container.appendChild(datePicker);
+    container.appendChild(basicModeIntervalsBox);
     container.appendChild(daysContainer);
 
     datesPickerWrapper.appendChild(container);

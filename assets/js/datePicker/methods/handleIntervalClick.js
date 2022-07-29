@@ -2,8 +2,13 @@
 import { DateTime } from "luxon";
 
 export const handleIntervalClick = (e, interval, getCalendarsData) => {
-    const { setStartDate, setEndDate, reInitCalendars, rootWrapper } =
-        getCalendarsData();
+    const {
+        setStartDate,
+        setEndDate,
+        reInitCalendars,
+        rootWrapper,
+        setSelectedInterval,
+    } = getCalendarsData();
     const currentItem = e.currentTarget;
     const thisIntervalItems = rootWrapper.querySelectorAll(
         `.js-date-picker-interval-btn[data-interval="${currentItem.dataset.interval}"]`
@@ -164,5 +169,6 @@ export const handleIntervalClick = (e, interval, getCalendarsData) => {
             break;
     }
 
+    setSelectedInterval(interval);
     reInitCalendars();
 };

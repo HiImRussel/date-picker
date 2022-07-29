@@ -1,5 +1,6 @@
 /** Helpers */
 import { createElement } from "../helpers/datePickerHelpers";
+import { handleIntervalClick } from "../methods/handleIntervalClick";
 
 export const initCalendarTop = (
     datePicker,
@@ -8,7 +9,7 @@ export const initCalendarTop = (
     date,
     calendarAccessor
 ) => {
-    const { changeMonthHandler } = getCalendarsData();
+    const { changeMonthHandler, rootWrapper } = getCalendarsData();
 
     const prevButton = createElement(
         "button",

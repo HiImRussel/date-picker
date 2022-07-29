@@ -50,6 +50,7 @@ const datePicker = (selector, options) => {
     let datesPickerWrapper;
     let hiddenInputStart;
     let hiddenInputEnd;
+    let selectedInterval;
 
     const mapOptions = () => {
         for (const [key, value] of Object.entries(options)) {
@@ -69,6 +70,10 @@ const datePicker = (selector, options) => {
 
     const setEndDate = (date) => {
         pickedEndDate = date;
+    };
+
+    const setSelectedInterval = (interval) => {
+        selectedInterval = interval;
     };
 
     const handleSaveClick = () => {
@@ -123,7 +128,9 @@ const datePicker = (selector, options) => {
     const createCalendarWrapper = () => {
         const calendarBox = createElement(
             "div",
-            "js-calendar-box date-picker__calendar-wrapper"
+            `js-calendar-box date-picker__calendar-wrapper ${
+                defaultOptions.mode !== "complex" ? "-basic" : ""
+            }`
         );
 
         rootWrapper.appendChild(calendarBox);
@@ -186,6 +193,8 @@ const datePicker = (selector, options) => {
             datesPickerWrapper,
             handleSaveClick,
             handleCancelClick,
+            setSelectedInterval,
+            selectedInterval,
         };
     };
 

@@ -1,4 +1,6 @@
 .date-picker {
+    $root: &;
+
     &__wrapper {
         position: relative;
     }
@@ -15,6 +17,53 @@
 
         &.-active {
             display: flex;
+        }
+
+        &.-basic {
+            #{$root}__interval-wrapper {
+                display: none;
+            }
+
+            #{$root}__inputs-wrapper {
+                display: none;
+            }
+
+            #{$root}__calendar {
+                &:nth-last-of-type(1) {
+                    display: none;
+                }
+            }
+
+            #{$root}__bottom-wrapper {
+                justify-content: center;
+                border: 0;
+
+                &::after {
+                    display: none;
+                }
+
+                &::before {
+                    display: none;
+                }
+            }
+
+            #{$root}__calendar {
+                border-left: 0;
+                border-right: 0;
+            }
+
+            #{$root}__buttons-wrapper {
+                width: 100%;
+            }
+
+            #{$root}__button {
+                max-width: 134px;
+                width: 100%;
+            }
+
+            #{$root}__basic-mode-intervals {
+                display: flex;
+            }
         }
     }
 
@@ -290,5 +339,26 @@
 
     &__hidden-input {
         display: none;
+    }
+
+    &__basic-mode-intervals {
+        display: none;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    &__basic-mode-interval-btn {
+        background-color: transparent;
+        border: 0;
+        border-radius: 6px;
+        color: $primary-700;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        cursor: pointer;
+
+        &.-active {
+            background-color: $primary-50;
+        }
     }
 }
