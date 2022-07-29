@@ -23,7 +23,7 @@ export const handleDayClick = (date, getCalendarsData) => {
         pickedEndDate
     );
 
-    if (isLikeStart || isLikeEnd) {
+    if ((isLikeStart || isLikeEnd) && isDateSet(pickedEndDate)) {
         setStartDate({
             day: date.monthDay,
             month: date.month,

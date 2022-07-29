@@ -13,8 +13,6 @@ export const handleIntervalClick = (e, interval, getCalendarsData) => {
     );
     const today = DateTime.now();
 
-    console.log(thisIntervalItems);
-
     allIntervals.forEach((item) => {
         item.classList.remove("-active");
     });
@@ -30,11 +28,23 @@ export const handleIntervalClick = (e, interval, getCalendarsData) => {
                 month: today.month,
                 year: today.year,
             });
+
+            setEndDate({
+                day: today.day,
+                month: today.month,
+                year: today.year,
+            });
             break;
         case "tommorrow":
             const tommorrow = today.plus({ days: 1 });
 
             setStartDate({
+                day: tommorrow.day,
+                month: tommorrow.month,
+                year: tommorrow.year,
+            });
+
+            setEndDate({
                 day: tommorrow.day,
                 month: tommorrow.month,
                 year: tommorrow.year,

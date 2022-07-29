@@ -27,7 +27,6 @@ const datePicker = (selector, options) => {
         },
     };
     const defaultOptions = {
-        rangePicking: true,
         hiddenInput: false,
         hiddenInputOutputFormat: "dd.MMMM.yyyy",
         inputOutputFormat: "dd.MMMM.yyyy",
