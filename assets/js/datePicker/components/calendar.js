@@ -11,7 +11,8 @@ import { initBasicModeIntervals } from "./basicModeIntervals";
 import { initBasicModeInputs } from "./basicModeInputs";
 
 const createCalendar = (getCalendarsData, calendarAccessor) => {
-    const { calendarsData, datesPickerWrapper } = getCalendarsData();
+    const { calendarsData, datesPickerWrapper, rootWrapper } =
+        getCalendarsData();
 
     const calendarDay = calendarsData[calendarAccessor].day;
     const calendarMonth = calendarsData[calendarAccessor].month;
@@ -34,7 +35,7 @@ const createCalendar = (getCalendarsData, calendarAccessor) => {
         year: prevMonth.year,
     });
 
-    const currentCalendarBox = document.querySelector(
+    const currentCalendarBox = rootWrapper.querySelector(
         `.js-calendar--${calendarAccessor}`
     );
 

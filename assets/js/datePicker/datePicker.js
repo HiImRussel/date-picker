@@ -53,6 +53,8 @@ const datePicker = (selector, options) => {
     let selectedInterval;
 
     const mapOptions = () => {
+        if (options === undefined || options === null) return;
+
         for (const [key, value] of Object.entries(options)) {
             if (
                 defaultOptions[key] === undefined ||
@@ -83,6 +85,13 @@ const datePicker = (selector, options) => {
         const endDate = DateTime.fromObject(pickedEndDate).toFormat(
             defaultOptions.inputOutputFormat
         );
+
+        inputElement.value = `${startDate} - ${endDate}`;
+
+        calendarBoxDOM.classList.remove("-active");
+
+        if (!defaultOptions.hiddenInput) return;
+
         const hiddenInputStartDate = DateTime.fromObject(
             pickedStartDate
         ).toFormat(defaultOptions.hiddenInputOutputFormat);
@@ -90,11 +99,8 @@ const datePicker = (selector, options) => {
             defaultOptions.hiddenInputOutputFormat
         );
 
-        inputElement.value = `${startDate} - ${endDate}`;
         hiddenInputStart.value = hiddenInputStartDate;
         hiddenInputEnd.value = hiddenInputEndDate;
-
-        calendarBoxDOM.classList.remove("-active");
     };
 
     const handleCancelClick = () => {
@@ -122,6 +128,9 @@ const datePicker = (selector, options) => {
 
         calendarBoxDOM.classList.remove("-active");
         inputElement.value = "";
+
+        if (!defaultOptions.hiddenInput) return;
+
         hiddenInputStart.value = "";
         hiddenInputEnd.value = "";
     };
@@ -260,6 +269,9 @@ const datePicker = (selector, options) => {
         );
 
         inputElement = document.querySelector(selector);
+
+        inputElement.readOnly = true;
+
         rootWrapper = inputElement.parentElement;
 
         if (defaultOptions.hiddenInput) {

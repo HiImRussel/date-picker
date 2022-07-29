@@ -9,9 +9,11 @@ Settings.defaultZone = "utc";
 Settings.defaultLocale = "pl";
 
 const init = () => {
-    const datePickerInstance = datePicker(".js-date-picker", {
+    datePicker(".js-date-picker", {
         hiddenInput: true,
     });
+
+    datePicker(".js-date-picker-sec");
 };
 
 init();
