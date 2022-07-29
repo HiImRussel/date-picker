@@ -1,62 +1,127 @@
 /** Helpers */
 import { createElement } from "../helpers/datePickerHelpers";
 
-const initPickInterval = (rootWrapper) => {
+/** Methods */
+import { handleIntervalClick } from "../methods/handleIntervalClick";
+
+const initPickInterval = (rootWrapper, getCalendarsData) => {
     const wrapper = createElement("div", "date-picker__interval-wrapper");
 
     const intervalButtonToday = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Dzisiaj"
     );
+
+    intervalButtonToday.dataset["interval"] = "today";
+
+    intervalButtonToday.addEventListener("click", (e) =>
+        handleIntervalClick(e, "today", getCalendarsData)
+    );
+
     const intervalButtonTommorow = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Jutro"
     );
+
+    intervalButtonTommorow.dataset["interval"] = "tommorrow";
+
+    intervalButtonTommorow.addEventListener("click", (e) =>
+        handleIntervalClick(e, "tommorrow", getCalendarsData)
+    );
+
     const intervalButtonThisWeek = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Ten tydzień"
     );
+
+    intervalButtonThisWeek.dataset["interval"] = "thisWeek";
+
+    intervalButtonThisWeek.addEventListener("click", (e) =>
+        handleIntervalClick(e, "thisWeek", getCalendarsData)
+    );
+
     const intervalButtonNextWeek = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Przyszły tydzień"
     );
+
+    intervalButtonNextWeek.dataset["interval"] = "nextWeek";
+
+    intervalButtonNextWeek.addEventListener("click", (e) =>
+        handleIntervalClick(e, "nextWeek", getCalendarsData)
+    );
+
     const intervalButtonThisMonth = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Ten miesiąc"
     );
+
+    intervalButtonThisMonth.dataset["interval"] = "thisMonth";
+
+    intervalButtonThisMonth.addEventListener("click", (e) =>
+        handleIntervalClick(e, "thisMonth", getCalendarsData)
+    );
+
     const intervalButtonNextMonth = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Przyszły miesiąc"
     );
+
+    intervalButtonNextMonth.dataset["interval"] = "nextMonth";
+
+    intervalButtonNextMonth.addEventListener("click", (e) =>
+        handleIntervalClick(e, "nextMonth", getCalendarsData)
+    );
+
     const intervalButtonThisYear = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Ten rok"
     );
+
+    intervalButtonThisYear.dataset["interval"] = "thisYear";
+
+    intervalButtonThisYear.addEventListener("click", (e) =>
+        handleIntervalClick(e, "thisYear", getCalendarsData)
+    );
+
     const intervalButtonNextYear = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Przyszły rok"
     );
+
+    intervalButtonNextYear.dataset["interval"] = "nextYear";
+
+    intervalButtonNextYear.addEventListener("click", (e) =>
+        handleIntervalClick(e, "nextYear", getCalendarsData)
+    );
+
     const intervalButtonAll = createElement(
         "div",
-        "date-picker__interval-btn",
+        "js-date-picker-interval-btn date-picker__interval-btn",
         "",
         "Wszsytkie terminy"
+    );
+
+    intervalButtonAll.dataset["interval"] = "all";
+
+    intervalButtonAll.addEventListener("click", (e) =>
+        handleIntervalClick(e, "all", getCalendarsData)
     );
 
     wrapper.appendChild(intervalButtonToday);

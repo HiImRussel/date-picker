@@ -132,16 +132,24 @@
 .date-picker__interval-wrapper {
   display: flex;
   flex-direction: column;
-  width: 160px; }
+  width: 160px;
+  padding-right: 16px; }
 
 .date-picker__interval-btn {
   padding: 10px 16px;
-  width: 100%;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   color: #344054;
-  margin-bottom: 4px; }
+  margin-bottom: 4px;
+  cursor: pointer; }
+  .date-picker__interval-btn.-active {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0091eb;
+    background: #e5f6ff;
+    border-radius: 6px; }
 
 .date-picker__date-pickers-wrapper {
   display: flex; }

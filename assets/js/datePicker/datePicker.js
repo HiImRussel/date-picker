@@ -199,7 +199,10 @@ const datePicker = (selector, options) => {
 
         createCalendarWrapper();
 
-        initPickInterval(rootWrapper.querySelector(".js-calendar-box"));
+        initPickInterval(
+            rootWrapper.querySelector(".js-calendar-box"),
+            getCalendarsData
+        );
 
         createRightColumn();
 
