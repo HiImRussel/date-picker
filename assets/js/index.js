@@ -11,6 +11,7 @@ Settings.defaultLocale = "pl";
 const init = () => {
     datePicker(".js-date-picker", {
         hiddenInput: true,
+        mode: "basic",
     });
 
     datePicker(".js-date-picker-sec");
