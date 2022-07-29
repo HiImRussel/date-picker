@@ -8,41 +8,41 @@ import {
     isDateSet,
 } from "../helpers/datePickerHelpers";
 
-const initBottom = (
-    container,
-    pickedStartDate = "",
-    pickedEndDate = "",
-    rootWrapper
-) => {
+const initBottom = (container, getCalendarsData) => {
+    const {
+        pickedStartDate,
+        pickedEndDate,
+        rootWrapper,
+        defaultOptions,
+        handleSaveClick,
+        handleCancelClick,
+    } = getCalendarsData();
     const domBottomWrapper = rootWrapper.querySelector(
         ".js-date-picker-bottom-wrapper"
     );
-    const datePickerBox = rootWrapper.querySelector(".js-calendar-box");
     const isSetStartDate = isDateSet(pickedStartDate);
     const isSetEndDate = isDateSet(pickedEndDate);
+    let outputStartDate = "";
+    let outputEndDate = "";
 
     if (domBottomWrapper !== null && domBottomWrapper !== undefined) {
         domBottomWrapper.remove();
     }
 
     if (isSetStartDate) {
-        pickedStartDate = DateTime.fromObject({
+        outputStartDate = DateTime.fromObject({
             day: pickedStartDate.day,
             month: pickedStartDate.month,
             year: pickedStartDate.year,
-        }).toFormat("dd.MM.yyyy");
-    } else {
-        pickedStartDate = "";
+        }).toFormat(defaultOptions.inputsInsideCalendarOutputFormat);
     }
 
     if (isSetEndDate) {
-        pickedEndDate = DateTime.fromObject({
+        outputEndDate = DateTime.fromObject({
             day: pickedEndDate.day,
             month: pickedEndDate.month,
             year: pickedEndDate.year,
-        }).toFormat("dd.MM.yyyy");
-    } else {
-        pickedEndDate = "";
+        }).toFormat(defaultOptions.inputsInsideCalendarOutputFormat);
     }
 
     const bottomWrapper = createElement(
@@ -54,13 +54,13 @@ const initBottom = (
         "text",
         true,
         "date-picker__input",
-        pickedStartDate
+        outputStartDate
     );
     const endInput = createInput(
         "text",
         true,
         "date-picker__input",
-        pickedEndDate
+        outputEndDate
     );
     const divider = createElement("span", "date-picker__divider", "", "-");
 
@@ -76,6 +76,9 @@ const initBottom = (
         "",
         "Anuluj"
     );
+
+    cancelButton.addEventListener("click", handleCancelClick);
+
     const applyButton = createElement(
         "button",
         "date-picker__button -blue",
@@ -83,9 +86,7 @@ const initBottom = (
         "Zastosuj"
     );
 
-    cancelButton.addEventListener("click", () =>
-        datePickerBox.classList.remove("-active")
-    );
+    applyButton.addEventListener("click", handleSaveClick);
 
     buttonsWrapper.appendChild(cancelButton);
     buttonsWrapper.appendChild(applyButton);

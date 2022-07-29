@@ -30,7 +30,7 @@ const datePicker = (selector, options) => {
         hiddenInput: false,
         hiddenInputOutputFormat: "dd.MMMM.yyyy",
         inputOutputFormat: "dd.MMMM.yyyy",
-        inputsInsideCalendarOutputFormat: "dd.MMMM.yyyy",
+        inputsInsideCalendarOutputFormat: "dd.MM.yyyy",
         mode: "complex",
         breakpoint: 768,
     };
@@ -67,6 +67,35 @@ const datePicker = (selector, options) => {
 
     const setEndDate = (date) => {
         pickedEndDate = date;
+    };
+
+    const handleSaveClick = () => {
+        const startDate = DateTime.fromObject(pickedStartDate).toFormat(
+            defaultOptions.inputOutputFormat
+        );
+        const endDate = DateTime.fromObject(pickedEndDate).toFormat(
+            defaultOptions.inputOutputFormat
+        );
+
+        inputElement.value = `${startDate} - ${endDate}`;
+    };
+
+    const handleCancelClick = () => {
+        pickedStartDate = {
+            day: null,
+            month: null,
+            year: null,
+        };
+        pickedEndDate = {
+            day: null,
+            month: null,
+            year: null,
+        };
+
+        reInitCalendars();
+
+        calendarBoxDOM.classList.remove("-active");
+        inputElement.value = "";
     };
 
     const createCalendarWrapper = () => {
@@ -133,6 +162,8 @@ const datePicker = (selector, options) => {
             setEndDate,
             reInitCalendars,
             datesPickerWrapper,
+            handleSaveClick,
+            handleCancelClick,
         };
     };
 
@@ -145,9 +176,7 @@ const datePicker = (selector, options) => {
 
         initBottom(
             rootWrapper.querySelector(".js-date-right-column"),
-            pickedStartDate,
-            pickedEndDate,
-            rootWrapper
+            getCalendarsData
         );
     };
 
@@ -209,9 +238,7 @@ const datePicker = (selector, options) => {
 
         initBottom(
             rootWrapper.querySelector(".js-date-right-column"),
-            "",
-            "",
-            rootWrapper
+            getCalendarsData
         );
 
         createCalendar(getCalendarsData, "firstCalendar");
