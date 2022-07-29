@@ -48,6 +48,8 @@ const datePicker = (selector, options) => {
     let calendarBoxDOM;
     let rootWrapper;
     let datesPickerWrapper;
+    let hiddenInputStart;
+    let hiddenInputEnd;
 
     const mapOptions = () => {
         for (const [key, value] of Object.entries(options)) {
@@ -76,8 +78,16 @@ const datePicker = (selector, options) => {
         const endDate = DateTime.fromObject(pickedEndDate).toFormat(
             defaultOptions.inputOutputFormat
         );
+        const hiddenInputStartDate = DateTime.fromObject(
+            pickedStartDate
+        ).toFormat(defaultOptions.hiddenInputOutputFormat);
+        const hiddenInputEndDate = DateTime.fromObject(pickedEndDate).toFormat(
+            defaultOptions.hiddenInputOutputFormat
+        );
 
         inputElement.value = `${startDate} - ${endDate}`;
+        hiddenInputStart.value = hiddenInputStartDate;
+        hiddenInputEnd.value = hiddenInputEndDate;
 
         calendarBoxDOM.classList.remove("-active");
     };
@@ -106,6 +116,8 @@ const datePicker = (selector, options) => {
 
         calendarBoxDOM.classList.remove("-active");
         inputElement.value = "";
+        hiddenInputStart.value = "";
+        hiddenInputEnd.value = "";
     };
 
     const createCalendarWrapper = () => {
@@ -225,14 +237,21 @@ const datePicker = (selector, options) => {
         rootWrapper = inputElement.parentElement;
 
         if (defaultOptions.hiddenInput) {
-            const hiddenInput = createInput(
+            hiddenInputStart = createInput(
+                "text",
+                true,
+                "date-picker__hidden-input",
+                ""
+            );
+            hiddenInputEnd = createInput(
                 "text",
                 true,
                 "date-picker__hidden-input",
                 ""
             );
 
-            rootWrapper.appendChild(hiddenInput);
+            rootWrapper.appendChild(hiddenInputStart);
+            rootWrapper.appendChild(hiddenInputEnd);
         }
 
         createCalendarWrapper();
