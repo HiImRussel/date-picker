@@ -143,6 +143,7 @@ export const handleIntervalClick = (e, interval, getCalendarsData) => {
                 month: endOfNextYear.month,
                 year: endOfNextYear.year,
             });
+            break;
         case "all":
             setStartDate({
                 day: null,

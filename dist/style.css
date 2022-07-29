@@ -37,6 +37,9 @@
     width: 100%; }
   .date-picker__calendar-wrapper.-basic .date-picker__basic-mode-intervals {
     display: flex; }
+  .date-picker__calendar-wrapper.-basic .date-picker__basic-mode-inputs {
+    display: flex;
+    align-items: center; }
 
 .date-picker__calendar {
   border: 1px solid #e4e7ec;
@@ -108,17 +111,21 @@
     left: 0;
     top: 0; }
   .date-picker__day:nth-of-type(7n) {
-    border-top-right-radius: 20px !important;
-    border-bottom-right-radius: 20px !important; }
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; }
     .date-picker__day:nth-of-type(7n)::before {
-      border-top-right-radius: 20px !important;
-      border-bottom-right-radius: 20px !important; }
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px; }
+    .date-picker__day:nth-of-type(7n).-end-day-picked::before {
+      border-radius: 0; }
   .date-picker__day:nth-of-type(7n + 1) {
-    border-top-left-radius: 20px !important;
-    border-bottom-left-radius: 20px !important; }
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px; }
     .date-picker__day:nth-of-type(7n + 1)::before {
-      border-top-left-radius: 20px !important;
-      border-bottom-left-radius: 20px !important; }
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px; }
+    .date-picker__day:nth-of-type(7n + 1).-start-day-picked::before {
+      border-radius: 0; }
 
 .date-picker__date {
   width: 100%;
@@ -266,6 +273,10 @@
   cursor: pointer; }
   .date-picker__basic-mode-interval-btn.-active {
     background-color: #e5f6ff; }
+
+.date-picker__basic-mode-inputs {
+  display: none;
+  margin-bottom: 16px; }
 
 @font-face {
   font-family: "Roboto";

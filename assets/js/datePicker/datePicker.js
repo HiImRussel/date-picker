@@ -32,7 +32,7 @@ const datePicker = (selector, options) => {
         inputOutputFormat: "dd.MMMM.yyyy",
         inputsInsideCalendarOutputFormat: "dd.MM.yyyy",
         mode: "complex",
-        breakpoint: 768,
+        breakpoint: 900,
     };
     let pickedStartDate = {
         day: null,
@@ -117,12 +117,23 @@ const datePicker = (selector, options) => {
             item.classList.remove("-active");
         });
 
+        setSelectedInterval("");
         reInitCalendars();
 
         calendarBoxDOM.classList.remove("-active");
         inputElement.value = "";
         hiddenInputStart.value = "";
         hiddenInputEnd.value = "";
+    };
+
+    const handleModeChange = () => {
+        const screenSize = document.documentElement.clientWidth;
+
+        if (screenSize > defaultOptions.breakpoint) {
+            calendarBoxDOM.classList.remove("-basic");
+        } else {
+            calendarBoxDOM.classList.add("-basic");
+        }
     };
 
     const createCalendarWrapper = () => {
@@ -151,6 +162,12 @@ const datePicker = (selector, options) => {
 
             calendarBoxDOM.classList.remove("-active");
         });
+
+        if (defaultOptions.mode !== "complex") return;
+
+        handleModeChange();
+
+        window.addEventListener("resize", handleModeChange);
     };
 
     const createRightColumn = () => {
