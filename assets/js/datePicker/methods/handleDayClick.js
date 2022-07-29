@@ -21,6 +21,8 @@ export const handleDayClick = (date, getCalendarsData) => {
         setStartDate,
         setEndDate,
         reInitCalendars,
+        rootWrapper,
+        setSelectedInterval,
     } = getCalendarsData();
 
     const isLikeStart = isTheSameDate(
@@ -82,6 +84,16 @@ export const handleDayClick = (date, getCalendarsData) => {
         });
         setEndDate({ day: null, month: null, year: null });
     }
+
+    setSelectedInterval(null);
+
+    const allIntervals = rootWrapper.querySelectorAll(
+        ".js-date-picker-interval-btn"
+    );
+
+    allIntervals.forEach((item) => {
+        item.classList.remove("-active");
+    });
 
     reInitCalendars();
 };
