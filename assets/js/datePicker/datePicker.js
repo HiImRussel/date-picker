@@ -78,9 +78,15 @@ const datePicker = (selector, options) => {
         );
 
         inputElement.value = `${startDate} - ${endDate}`;
+
+        calendarBoxDOM.classList.remove("-active");
     };
 
     const handleCancelClick = () => {
+        const allIntervals = rootWrapper.querySelectorAll(
+            ".js-date-picker-interval-btn"
+        );
+
         pickedStartDate = {
             day: null,
             month: null,
@@ -91,6 +97,10 @@ const datePicker = (selector, options) => {
             month: null,
             year: null,
         };
+
+        allIntervals.forEach((item) => {
+            item.classList.remove("-active");
+        });
 
         reInitCalendars();
 
