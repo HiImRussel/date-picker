@@ -56,49 +56,61 @@ export const initCalendarDays = (
         const isEndSet = isDateSet(pickedEndDate);
 
         if (isStartSet && isEndSet) {
-            const isAfter = isDayAfter(
-                { monthDay, month, year },
-                pickedStartDate
-            );
-            const isBefore = isDayBefore(
-                { monthDay, month, year },
-                pickedEndDate
-            );
-
-            if (isAfter && isBefore) {
-                renderDay.classList.add("-picked-between");
-            }
-
             if (
+                isTheSameDate(pickedStartDate, pickedEndDate) &&
                 isTheSameDate(
                     { day: monthDay, month: month, year: year },
                     pickedStartDate
                 )
             ) {
-                const pseudoElementStart = createElement(
-                    "div",
-                    "date-picker__day js-date-picker-day -pseudo-element -picked",
-                    "",
-                    monthDay
+                renderDay.classList.add("-picked");
+            } else {
+                const isAfter = isDayAfter(
+                    { monthDay, month, year },
+                    pickedStartDate
                 );
-
-                renderDay.appendChild(pseudoElementStart);
-                renderDay.classList.add("-start-day-picked");
-            } else if (
-                isTheSameDate(
-                    { day: monthDay, month: month, year: year },
+                const isBefore = isDayBefore(
+                    { monthDay, month, year },
                     pickedEndDate
-                )
-            ) {
-                const pseudoElementEnd = createElement(
-                    "div",
-                    "date-picker__day js-date-picker-day -pseudo-element -picked",
-                    "",
-                    monthDay
                 );
 
-                renderDay.appendChild(pseudoElementEnd);
-                renderDay.classList.add("-end-day-picked");
+                if (isAfter && isBefore) {
+                    renderDay.classList.add("-picked-between");
+                }
+
+                if (
+                    isTheSameDate(
+                        { day: monthDay, month: month, year: year },
+                        pickedStartDate
+                    )
+                ) {
+                    const pseudoElementStart = createElement(
+                        "div",
+                        "date-picker__day js-date-picker-day -pseudo-element -picked",
+                        "",
+                        monthDay
+                    );
+
+                    renderDay.appendChild(pseudoElementStart);
+
+                    renderDay.classList.add("-start-day-picked");
+                } else if (
+                    isTheSameDate(
+                        { day: monthDay, month: month, year: year },
+                        pickedEndDate
+                    )
+                ) {
+                    const pseudoElementEnd = createElement(
+                        "div",
+                        "date-picker__day js-date-picker-day -pseudo-element -picked",
+                        "",
+                        monthDay
+                    );
+
+                    renderDay.appendChild(pseudoElementEnd);
+
+                    renderDay.classList.add("-end-day-picked");
+                }
             }
         } else if (
             isStartSet &&
