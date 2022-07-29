@@ -76,7 +76,7 @@ export const createInput = (type, readonly = false, className, value) => {
 /**
  * Change month of date to prev/ next
  *
- * @param {String} action - action to change "prev", "next"
+ * @param {"prev" | "next"} action - action to change "prev", "next"
  * @param {Object} date - date to change
  * @param {Number} date.day
  * @param {Number} date.month
