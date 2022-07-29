@@ -1,7 +1,15 @@
 /** Helpers */
 import { createElement } from "../helpers/datePickerHelpers";
-import { handleIntervalClick } from "../methods/handleIntervalClick";
 
+/**
+ * Init calendar top section (current watching period of time month and year)
+ *
+ * @param {HTMLElement} datePicker - current calendar box
+ * @param {HTMLElement} daysContainer - current calendar container with days
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ * @param {Object} date - date formated by luxon representing currently watching period of time
+ * @param {String} calendarAccessor - accessor to calendar data property "firstCalendar" or "secondCalendar"
+ */
 export const initCalendarTop = (
     datePicker,
     daysContainer,
@@ -9,7 +17,7 @@ export const initCalendarTop = (
     date,
     calendarAccessor
 ) => {
-    const { changeMonthHandler, rootWrapper } = getCalendarsData();
+    const { changeMonthHandler } = getCalendarsData();
 
     const prevButton = createElement(
         "button",

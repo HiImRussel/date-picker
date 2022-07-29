@@ -10,6 +10,12 @@ import { initCalendarDays } from "./calendarDays";
 import { initBasicModeIntervals } from "./basicModeIntervals";
 import { initBasicModeInputs } from "./basicModeInputs";
 
+/**
+ * Init calendar of current watching period of time
+ *
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ * @param {String} calendarAccessor - accessor to calendar data property "firstCalendar" or "secondCalendar"
+ */
 const createCalendar = (getCalendarsData, calendarAccessor) => {
     const { calendarsData, datesPickerWrapper, rootWrapper } =
         getCalendarsData();

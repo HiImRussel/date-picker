@@ -1,6 +1,13 @@
 /** Luxon */
 import { DateTime } from "luxon";
 
+/**
+ * Handle interval click and select period of time
+ *
+ * @param {Event} e -click item event
+ * @param {String} interval - picked item interval
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ */
 export const handleIntervalClick = (e, interval, getCalendarsData) => {
     const {
         setStartDate,

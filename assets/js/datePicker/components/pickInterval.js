@@ -4,6 +4,12 @@ import { createElement } from "../helpers/datePickerHelpers";
 /** Methods */
 import { handleIntervalClick } from "../methods/handleIntervalClick";
 
+/**
+ * Initialize dates interval picker in complex mode
+ *
+ * @param {HTMLElement} rootWrapper - root wrapper of date-picker
+ * @param {Function} getCalendarsData  - function passed from datePicker init to handle data
+ */
 const initPickInterval = (rootWrapper, getCalendarsData) => {
     const wrapper = createElement("div", "date-picker__interval-wrapper");
 

@@ -2,6 +2,15 @@
 import { DateTime } from "luxon";
 
 /** DOM helpers */
+/**
+ * Create new DOM element
+ *
+ * @param {String} htmlSelector
+ * @param {String} className
+ * @param {String} idName
+ * @param {String} content
+ * @returns
+ */
 export const createElement = (
     htmlSelector = "div",
     className = "",
@@ -20,6 +29,14 @@ export const createElement = (
     return element;
 };
 
+/**
+ * Wrap element with newly created element
+ *
+ * @param {HTMLElement} domElement - element to wrap
+ * @param {String} wrapperHtmlSelector
+ * @param {String} wrapperClass
+ * @param {String} wrapperID
+ */
 export const wrapElement = (
     domElement,
     wrapperHtmlSelector = "div",
@@ -36,6 +53,15 @@ export const wrapElement = (
     domElement.outerHTML = wrapper.outerHTML;
 };
 
+/**
+ * Create input element
+ *
+ * @param {String} type
+ * @param {Boolean} readonly
+ * @param {String} className
+ * @param {String} value
+ * @returns
+ */
 export const createInput = (type, readonly = false, className, value) => {
     const input = createElement("input", className);
 
@@ -47,6 +73,16 @@ export const createInput = (type, readonly = false, className, value) => {
 };
 
 /** Date helpers */
+/**
+ * Change month of date to prev/ next
+ *
+ * @param {String} action - action to change "prev", "next"
+ * @param {Object} date - date to change
+ * @param {Number} date.day
+ * @param {Number} date.month
+ * @param {Number} date.year
+ * @returns
+ */
 export const changeDate = (action, date) => {
     if (action === "prev") {
         if (date.month - 1 < 1) {
@@ -67,6 +103,14 @@ export const changeDate = (action, date) => {
     return date;
 };
 
+/**
+ * Compare if date is todays date
+ *
+ * @param {Number} day
+ * @param {Number} month
+ * @param {Number} year
+ * @returns
+ */
 export const isCurrentDate = (day, month, year) => {
     const actualDate = DateTime.now();
     const actualDay = actualDate.day;
@@ -78,6 +122,19 @@ export const isCurrentDate = (day, month, year) => {
     return actualDay === day;
 };
 
+/**
+ * Check if date is the samae
+ *
+ * @param {Object} date - date to compare
+ * @param {Number} date.day
+ * @param {Number} date.month
+ * @param {Number} date.year
+ * @param {Object} dateToCompare - date to compare
+ * @param {Number} dateToCompare.day
+ * @param {Number} dateToCompare.month
+ * @param {Number} dateToCompare.year
+ * @returns
+ */
 export const isTheSameDate = (date, dateToCompare) => {
     if (date.month !== dateToCompare.month || date.year !== dateToCompare.year)
         return false;
@@ -85,10 +142,32 @@ export const isTheSameDate = (date, dateToCompare) => {
     return date.day === dateToCompare.day;
 };
 
+/**
+ * Check if date is set properly
+ *
+ * @param {Object} date - date to compare
+ * @param {Number | null} date.monthDay
+ * @param {Number | null} date.month
+ * @param {Number | null} date.year
+ * @returns
+ */
 export const isDateSet = (date) => {
     return date.day !== undefined && date.day !== null;
 };
 
+/**
+ * Compare if date is after other date
+ *
+ * @param {Object} date - date to compare
+ * @param {Number} date.monthDay
+ * @param {Number} date.month
+ * @param {Number} date.year
+ * @param {Object} dateToCompare - date to compare
+ * @param {Number} dateToCompare.day
+ * @param {Number} dateToCompare.month
+ * @param {Number} dateToCompare.year
+ * @returns
+ */
 export const isDayAfter = (date, dateToCompare) => {
     const diff = DateTime.fromObject({
         day: date.monthDay,
@@ -105,6 +184,19 @@ export const isDayAfter = (date, dateToCompare) => {
     return diff.values.milliseconds > 0;
 };
 
+/**
+ * Compare if date is before other date
+ *
+ * @param {Object} date - date to compare
+ * @param {Number} date.monthDay
+ * @param {Number} date.month
+ * @param {Number} date.year
+ * @param {Object} dateToCompare - date to compare
+ * @param {Number} dateToCompare.day
+ * @param {Number} dateToCompare.month
+ * @param {Number} dateToCompare.year
+ * @returns
+ */
 export const isDayBefore = (date, dateToCompare) => {
     const diff = DateTime.fromObject({
         day: date.monthDay,

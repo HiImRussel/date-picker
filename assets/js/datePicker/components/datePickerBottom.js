@@ -8,6 +8,12 @@ import {
     isDateSet,
 } from "../helpers/datePickerHelpers";
 
+/**
+ * Init calendar bottom section with inputs and action buttons
+ *
+ * @param {HTMLElement} container - container to place section
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ */
 const initBottom = (container, getCalendarsData) => {
     const {
         pickedStartDate,

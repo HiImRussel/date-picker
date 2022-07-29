@@ -13,6 +13,17 @@ import createCalendar from "./components/calendar";
 import initBottom from "./components/datePickerBottom";
 import initPickInterval from "./components/pickInterval";
 
+/**
+ * Init date picker, first of the finded item by selector will be changed into date picker
+ * @param {string} selector - selector of input that will be changed into date picker
+ * @param {string} options - options to init date picker
+ * @param {boolean} options.hidenInput - disable/endable hiddenInput feature (default false)
+ * @param {string} options.hiddenInputOutputFormat - if hidden input is enabled you can change output value date format
+ * @param {string} options.inputOutputFormat - date format to output to input triggered by the main selector
+ * @param {string} options.inputsInsideCalendarOutputFormat - date format to use inside calendar inputs
+ * @param {string} options.mode - calendar mode. Available options "complex", "basic" (default complex and after reach breakpoint will be changed into basic)
+ * @param {string} options.breakpoint - breakpoint that will change complex date picker into basic
+ */
 const datePicker = (selector, options) => {
     const calendarsData = {
         firstCalendar: {

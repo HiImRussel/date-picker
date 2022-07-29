@@ -11,6 +11,16 @@ import {
 /** Methods */
 import { handleDayClick } from "../methods/handleDayClick";
 
+/**
+ * Create calendar days contain prev month days if current watching month start of month is different than monday and next month days if current watching month is ending before sunday
+ *
+ * @param {Object} date - date formated bu luxon
+ * @param {Object} prevDate - prev month date formated by luxon
+ * @param {HTMLElement} daysContainer - container to store days
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ * @param {String} calendarAccessor - accessor to calendar data property "firstCalendar" or "secondCalendar"
+ * @returns
+ */
 export const initCalendarDays = (
     date,
     prevDate,

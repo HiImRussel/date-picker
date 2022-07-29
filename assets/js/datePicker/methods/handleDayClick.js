@@ -5,6 +5,15 @@ import {
     isDayBefore,
 } from "../helpers/datePickerHelpers";
 
+/**
+ * Handle day click and set start/end date
+ *
+ * @param {Object} date - clicked date
+ * @param {Number | null} date.day - date day
+ * @param {Number | null} date.month - date month
+ * @param {Number | null} date.year - date year
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ */
 export const handleDayClick = (date, getCalendarsData) => {
     const {
         pickedStartDate,

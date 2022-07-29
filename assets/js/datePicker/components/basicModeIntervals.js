@@ -4,6 +4,12 @@ import { createElement } from "../helpers/datePickerHelpers";
 /** Methods */
 import { handleIntervalClick } from "../methods/handleIntervalClick";
 
+/**
+ * Init intervals for basic mode calendar
+ *
+ * @param {HTMLElement} container - container to place intervals
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ */
 export const initBasicModeIntervals = (container, getCalendarsData) => {
     const { selectedInterval } = getCalendarsData();
 

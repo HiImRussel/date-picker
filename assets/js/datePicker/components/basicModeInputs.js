@@ -8,6 +8,12 @@ import {
     isDateSet,
 } from "../helpers/datePickerHelpers";
 
+/**
+ * Init inputs for calendar in basic mode
+ *
+ * @param {HTMLElement} container - container to place inputs
+ * @param {Function} getCalendarsData - function passed from datePicker init to handle data
+ */
 export const initBasicModeInputs = (container, getCalendarsData) => {
     const { pickedStartDate, pickedEndDate, defaultOptions } =
         getCalendarsData();
