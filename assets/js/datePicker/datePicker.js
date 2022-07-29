@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 import {
     createElement,
     createInput,
+    isDateSet,
     wrapElement,
 } from "./helpers/datePickerHelpers";
 
@@ -90,6 +91,8 @@ const datePicker = (selector, options) => {
     };
 
     const handleSaveClick = () => {
+        if (!isDateSet(pickedStartDate) || !isDateSet(pickedEndDate)) return;
+
         const startDate = DateTime.fromObject(pickedStartDate).toFormat(
             defaultOptions.inputOutputFormat
         );
