@@ -86,6 +86,12 @@ export const initCalendarDays = (
 
                 if (isAfter && isBefore) {
                     renderDay.classList.add("-picked-between");
+
+                    if (monthDay === 1) {
+                        renderDay.classList.add("-between-start");
+                    } else if (monthDay === daysInMonth) {
+                        renderDay.classList.add("-between-end");
+                    }
                 }
 
                 if (
@@ -103,7 +109,9 @@ export const initCalendarDays = (
 
                     renderDay.appendChild(pseudoElementStart);
 
-                    renderDay.classList.add("-start-day-picked");
+                    if (monthDay < daysInMonth) {
+                        renderDay.classList.add("-start-day-picked");
+                    }
                 } else if (
                     isTheSameDate(
                         { day: monthDay, month: month, year: year },
@@ -112,14 +120,16 @@ export const initCalendarDays = (
                 ) {
                     const pseudoElementEnd = createElement(
                         "div",
-                        "date-picker__day js-date-picker-day -pseudo-element -picked",
+                        `date-picker__day js-date-picker-day -pseudo-element -picked`,
                         "",
                         monthDay
                     );
 
                     renderDay.appendChild(pseudoElementEnd);
 
-                    renderDay.classList.add("-end-day-picked");
+                    if (monthDay > 1) {
+                        renderDay.classList.add("-end-day-picked");
+                    }
                 }
             }
         } else if (

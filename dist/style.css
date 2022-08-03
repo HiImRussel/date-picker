@@ -131,6 +131,12 @@
       border-bottom-left-radius: 20px; }
     .date-picker__day:nth-of-type(7n + 1).-start-day-picked::before {
       border-radius: 0; }
+  .date-picker__day.-between-start {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px; }
+  .date-picker__day.-between-end {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; }
 
 .date-picker__date {
   width: 100%;
