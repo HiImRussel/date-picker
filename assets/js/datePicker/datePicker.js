@@ -24,6 +24,8 @@ import initPickInterval from "./components/pickInterval";
  * @param {String} options.inputsInsideCalendarOutputFormat - date format to use inside calendar inputs
  * @param {"complex" | "basic"} options.mode - calendar mode. Available options "complex", "basic" (default complex and after reach breakpoint will be changed into basic)
  * @param {Number} options.breakpoint - breakpoint that will change complex date picker into basic
+ * @param {String} options.hiddenInputNameStart - hidden input start date name
+ * @param {String} options.hiddenInputNameEnd - hidden input end date name
  */
 const datePicker = (selector, options) => {
     const calendarsData = {
@@ -40,6 +42,8 @@ const datePicker = (selector, options) => {
     };
     const defaultOptions = {
         hiddenInput: false,
+        hiddenInputNameStart: "date_picker_start_date",
+        hiddenInputNameEnd: "date_picker_end_date",
         hiddenInputOutputFormat: "dd.MMMM.yyyy",
         inputOutputFormat: "dd.MMMM.yyyy",
         inputsInsideCalendarOutputFormat: "dd.MM.yyyy",
@@ -293,13 +297,15 @@ const datePicker = (selector, options) => {
                 "text",
                 true,
                 "date-picker__hidden-input",
-                ""
+                "",
+                defaultOptions.hiddenInputNameStart
             );
             hiddenInputEnd = createInput(
                 "text",
                 true,
                 "date-picker__hidden-input",
-                ""
+                "",
+                defaultOptions.hiddenInputNameEnd
             );
 
             rootWrapper.appendChild(hiddenInputStart);

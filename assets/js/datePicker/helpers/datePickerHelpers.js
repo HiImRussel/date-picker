@@ -62,12 +62,16 @@ export const wrapElement = (
  * @param {String} value
  * @returns
  */
-export const createInput = (type, readonly = false, className, value) => {
+export const createInput = (type, readonly = false, className, value, name) => {
     const input = createElement("input", className);
 
     input.type = type;
     input.readOnly = readonly;
     input.value = value;
+
+    if (name === undefined || name === null) return input;
+
+    input.name = name;
 
     return input;
 };
