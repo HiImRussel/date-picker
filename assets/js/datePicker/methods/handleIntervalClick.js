@@ -91,6 +91,7 @@ export const handleIntervalClick = (e, interval, getCalendarsData) => {
                 month: nextWeekEnd.month,
                 year: nextWeekEnd.year,
             });
+            break;
         case "thisMonth":
             const endOfThisMonth = today.endOf("month");
 
